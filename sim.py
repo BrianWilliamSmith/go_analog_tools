@@ -2,14 +2,6 @@ import streamlit as st
 import pandas as pd
 
 # Filepaths for video game and board game info
-bg_filepath = 'bg.csv'
-vg_filepath = 'vg.csv'
-
-# Filepaths for item similarity matrices
-ism_bgg_steam_filepath = 'ism_bgg_df.csv'
-ism_steam_steam_filepath = 'ism_steam_df.csv'
-
-# Filepaths for video game and board game info
 # Used in web app
 bg_app_filepath = 'bg_info_for_app.csv'
 vg_app_filepath = 'vg_info_for_app.csv'
@@ -18,19 +10,13 @@ vg_app_filepath = 'vg_info_for_app.csv'
 # Separate functions for different dataests so they can all be cached
 @st.cache(hash_funcs={pd.DataFrame: lambda _: None})
 def load_steam_data():
-    return pd.read_csv(ism_steam_steam_filepath, index_col = 0)
+    df = pd.read_pickle('ism_steam.pkl', compression="bz2")
+    return df
 
 @st.cache(hash_funcs={pd.DataFrame: lambda _: None})
 def load_bgg_data():
-    return pd.read_csv(ism_bgg_steam_filepath, index_col = 0)
-
-@st.cache(hash_funcs={pd.DataFrame: lambda _: None})
-def load_bg_data():
-    return pd.read_csv(bg_filepath)
-
-@st.cache(hash_funcs={pd.DataFrame: lambda _: None})
-def load_vg_data():
-    return pd.read_csv(vg_filepath)
+    df = pd.read_pickle('ism_bgg.pkl', compression="bz2")
+    return df
 
 @st.cache(hash_funcs={pd.DataFrame: lambda _: None})
 def load_bg_data_for_web_app():

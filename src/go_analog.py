@@ -116,7 +116,7 @@ def recommend_boardgames(steam_id,
     
     output_df = pd.DataFrame(output, columns=['Game', 'Score', 'Recommended because…']).sort_values('Score', ascending=False)
     output_df = output_df[output_df.Score>-100]
-    output_df['Your Ranking'] = ['#' + str(x) for x in(output_df.reset_index().index + 1)]
+    output_df['My Ranking'] = ['#' + str(x) for x in(output_df.reset_index().index + 1)]
     
     return output_df
 
@@ -127,7 +127,7 @@ def app():
     form = st.form(key='my_key')
     
     steam_id = form.text_input("Enter Steam ID", '76561198026189780')
-    popular_games = not form.checkbox("Don't add popular games to ranking")
+    popular_games = not form.checkbox("Only add popular games to ranking if they're similar to games I like")
 
     with form.expander("Advanced options for fiddling and debugging",):
         how_many = st.slider("Number of games to recommend", 1, 20, 10)
@@ -137,23 +137,23 @@ def app():
         hidden_scores = st.checkbox("Show predicted scores (z-score for predicted games)")
         reverse = st.checkbox("Show games you'd probably hate (why are you doing this!)")
     
-    sort_by_selection = form.selectbox("Sort by column…", ("Your Ranking",
+    sort_by_selection = form.selectbox("Sort by column…", ("My Ranking",
                                                            "BGG Rating (desc)",
                                                            "BGG Ranking",
                                                            "Title",
                                                            "Release Year (desc)"))
 
-    column_settings = {'Your Ranking':('Score',True),
+    column_settings = {'My Ranking':('Score',True),
                        'BGG Rating (desc)':('BGG Rating', True),
                        'BGG Ranking':('BGG Ranking', False),
-                       'Title':('Title', False),
+                       'Title':('Name', False),
                        'Release Year (desc)':('Release', True)}
 
     sort_by, desc = column_settings.get(sort_by_selection)
 
     
     show_columns = ['Title',
-                    'Your Ranking',
+                    'My Ranking',
                     'BGG Ranking',
                     'BGG Rating',
                     'Release',
