@@ -10,11 +10,9 @@ The main dataset consists of four tables. The same (anonymized) users are includ
 - **BGGRatings** : Board games and ratings. Accessed using BGG API 
 - **SteamPlaytimes** : Video games and playtimes. Doesn't include games that players own but have never played. Accessed using Steam API
 - **BoardGames** : Board game info from BGG for the board games in BGGRatings. No expansions. Accessed using BGG API
-- **VideoGames** : Video game info from Steam for the video games in SteamPlaytimes. Accessed by scraping Steam store pages ''')
+- **VideoGames** : Video game info from Steam for the video games in SteamPlaytimes. Accessed by scraping Steam store pages 
 
-    st.write("Download <a href='http://google.com'>Go_Analog_Dataset.zip</a> (100mb)", unsafe_allow_html=True)
-
-    st.markdown('''	
+[Go Analog Dataset on Github](https://github.com/BrianWilliamSmith/go_analog_tools/tree/main/go_analog_dataset)
 
 #### Things you should know if you want to use the data
 

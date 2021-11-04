@@ -6,7 +6,7 @@ def app():
 
 ### Welcome!
 
-I'm Brian, and I developed Go Analog as a portfolio project, fueled by a love of all types of gaming.
+I'm Brian, and I developed Go Analog as a portfolio project, fueled by a love of all types of gaming. You can find everything [on Github](https://github.com/BrianWilliamSmith/go_analog_tools/)
 
 - **Go Analog** recommends board games that are similar to your favorite video games
    - The recommender requires an account of the videogaming platform Steam
@@ -23,9 +23,9 @@ I'm Brian, and I developed Go Analog as a portfolio project, fueled by a love of
 - All of the tools were built using a home-brewed dataset of users' video game playtimes and board game ratings
     - The data was collected by identifying users who use both BoardGameGeek (BGG) and Steam, and collating their game collections from both platforms
     - You can download the dataset and read more about how it was made on the **Dataset** page 
-- There's a **github page**, where you can find everything used in the app (except my Steam API key!)
+
 - Questions? Ideas? Job? Contact me and say hello!
-    - LinkedIn : linked.com/brianwilliamsmith
+    - LinkedIn : [linked.com/brianwilliamsmith](https://www.linkedin.com/in/brian-william-smith/)
     - E-mail : bwsmith.linguist@gmail.com 
 
                 ''')
