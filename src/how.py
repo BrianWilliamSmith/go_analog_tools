@@ -4,8 +4,6 @@ def app():
     st.title("🎲 How's it work? 🕹")
     st.markdown('''
 
-Here are some technical details for the curious.
-
 ### The recommender
 
 - The recommender uses a really simple memory-based item-item collaborative filtering model

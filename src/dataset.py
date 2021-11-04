@@ -1,7 +1,7 @@
 import streamlit as st
 
 def app():
-    st.title('🎲 The Go Analog Dataset 🕹')
+    st.title('🎲 Dataset 🕹')
     st. markdown('''
 ### Main dataset
 

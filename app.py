@@ -11,7 +11,7 @@ def main():
 
 pages = {
     "Home": home,
-    "Recommend BGs based on your Steam profile": go_analog,
+    "Go Analog: Recommend BGs based on your Steam profile": go_analog,
     "Convert VG ⮕ BG": sim_bg,
     "Convert VG ⮕ VG": sim_vg,
     "Dataset": dataset,
@@ -20,3 +20,4 @@ pages = {
 
 if __name__ == "__main__":
     main()
+    
