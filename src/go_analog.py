@@ -5,6 +5,7 @@ from src.go_analog_shared_functions import *
 import requests as rq
 import json
 
+
 def get_games(steam_id, my_key):
     '''
     Takes a steam id and api key and returns a dictionary with game ids and playtimes
@@ -41,7 +42,7 @@ def normalize_ratings(game_ratings, cutoff=10, z_scores = True):
 
     return(list(zip(games, ratings)))
 
-@st.cache
+@st.cache(show_spinner=False, suppress_st_warning=True)
 def recommend_boardgames(steam_id, 
                          steam_key, 
                          ism, 
@@ -51,6 +52,15 @@ def recommend_boardgames(steam_id,
                          popular_games=True):
    
     vgs = get_games(steam_id, steam_key)
+
+    if vgs == '500':
+        st.error("No luck getting finding user! Not a valid Steam ID?")
+        st.stop()
+
+    if vgs == 'No games':
+        st.error("No luck getting games! Are games set to private?")
+        st.stop()
+
     vgs = normalize_ratings(vgs)
     
     # Key to convert between game names and ids
@@ -126,7 +136,7 @@ def app():
 
     form = st.form(key='my_key')
     
-    steam_id = form.text_input("Enter Steam ID", '76561198026189780')
+    steam_id = form.text_input("Enter 16-digit Steam ID", '76561198026189780')
     popular_games = not form.checkbox("Only add popular games to ranking if they're similar to games I like")
 
     with form.expander("Advanced options for fiddling and debugging",):

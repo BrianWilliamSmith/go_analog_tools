@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import random as rd
 
 # Filepaths for video game and board game info
 # Used in web app
@@ -10,15 +11,17 @@ ism_steam_filepath = 'web_app_dataset/ism_steam.pkl'
 
 # Functions for loading data
 # Separate functions for different dataests so they can all be cached
-@st.cache(hash_funcs={pd.DataFrame: lambda _: None})
+@st.cache(hash_funcs={pd.DataFrame: lambda _: None}, show_spinner=False)
 def load_steam_data():
-    df = pd.read_pickle(ism_steam_filepath, compression="bz2")
-    return df
+    with st.spinner("Please wait. Loading video game ⮕ video game item similarity matrix…"):
+        df = pd.read_pickle(ism_steam_filepath, compression="bz2")
+        return df
 
-@st.cache(hash_funcs={pd.DataFrame: lambda _: None})
+@st.cache(hash_funcs={pd.DataFrame: lambda _: None}, show_spinner=False)
 def load_bgg_data():
-    df = pd.read_pickle(ism_bgg_filepath, compression="bz2")
-    return df
+    with st.spinner("Please wait. Loading video game ⮕ board game item similarity matrix…"):
+        df = pd.read_pickle(ism_bgg_filepath, compression="bz2")
+        return df
 
 @st.cache(hash_funcs={pd.DataFrame: lambda _: None})
 def load_bg_data_for_web_app():
@@ -66,7 +69,8 @@ def find_similar(platform='steam', reverse=False):
         dataset = load_bgg_data()
   
     form = st.form(key='my_key')
-    game = form.selectbox("Select video game", options=dataset.columns)
+    game_options = dataset.columns.sort_values()
+    game = form.selectbox("Select video game", options=game_options)
     n = form.slider("Number of games", 5, 50, 10)
     reverse = form.checkbox("Show least similar games instead")
     submit = form.form_submit_button("Find similar games")
@@ -80,6 +84,7 @@ def find_similar(platform='steam', reverse=False):
 
     columns_to_show = ['Similarity Score','Title','Release'] + \
                         platform_cols + ['Tags']
+
     if submit:
         out = find_similar_games(game, dataset)
         out = annotate_table(out, platform=platform)
@@ -99,6 +104,6 @@ def find_similar(platform='steam', reverse=False):
             comparative = " most"
     
         st.write(target_game, unsafe_allow_html=True)
+        st.write('<br>', unsafe_allow_html=True)
         st.markdown("### The "+str(n)+" "+type_of_game+" games "+comparative+" similar to "+game)
-        st.write('<br><br>', unsafe_allow_html=True)
         st.write(out, unsafe_allow_html=True)
