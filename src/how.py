@@ -1,29 +1,13 @@
 import streamlit as st
 
 def app():
-    st.title('Home')
+    st.title("How's it work?")
     st.markdown('''
 
-### Welcome!
+Here are some technical details for the curious.
 
-I'm Brian, and I developed Go Analog as a portfolio project, fueled by a love of all types of gaming.
+### The recommender
 
-- **Go Analog** recommends board games that are similar to your favorite video games
-   - The recommender requires an account of the videogaming platform Steam
-   - Enter your 9-digit Steam ID and make sure your video game playtime isn't set to private
-   - Go Analog will access your video game play history and make personalized recommendations for board games
-- If you don't have a Steam account, or if you just want to play with the similarity model, you can use the conversion tools to select a video game and explore similar video or board games 
-- All of the tools were built using a home-brewed dataset of users' video game playtimes and board game ratings
-    - The data was collected by identifying users who use both BoardGameGeek (BGG) and Steam, and collating their game collections from both platforms
-    - You can download the dataset and read more about how it was made on the **Dataset** page 
-- There's a **github page**, where you can find everything used in the app (except my Steam API key!)
-- Questions? Ideas? Job? Contact me and say hello!
-    - LinkedIn : linked.com/brianwilliamsmith
-    - E-mail : bwsmith.linguist@gmail.com 
-
-### How's it work?
-
-Here's some technical stuff about how the recommender works, just in case it's useful for anyone working on a project like this.
 - The recommender uses a really simple memory-based item-item collaborative filtering model
 - A huge table contains a similarity score for every (video game, board game) pair
 

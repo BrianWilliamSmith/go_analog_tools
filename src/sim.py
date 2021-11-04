@@ -27,13 +27,10 @@ def load_vg_data_for_web_app():
     return pd.read_csv(vg_app_filepath)
 
 
-def find_similar_games(game_name, item_sim_matrix, n=5, reverse=False):
+def find_similar_games(game_name, item_sim_matrix):
     # Returns 2-column data frame
     try:
-        if reverse == False:
-            out = item_sim_matrix[game_name].nlargest(n+1)
-        else:
-            out = item_sim_matrix[game_name].nsmallest(n+1)
+        out = item_sim_matrix[game_name].sort_values(ascending=False)
         out = out[1:]
         out = pd.DataFrame(zip(out.index,out), columns=['Game','Similarity Score'])
         return out 
@@ -54,11 +51,10 @@ def rearrange_table(df, columns_to_show, order_by='Title', how_many_rows=10,
         df = df.head(how_many_rows)
     else:
         df = df.tail(how_many_rows)
-    df.sort_values(by = [order_by], ascending = not desc, inplace=True)
+    df = df.sort_values(by = [order_by], ascending = not desc)
     return df[columns_to_show]
 
 def render_table(df):
-    df.replace("''","\'",inplace=True)
     return df.to_html(index=False, justify='center', escape=False)
 
 def find_similar(platform='steam', reverse=False):
@@ -83,16 +79,24 @@ def find_similar(platform='steam', reverse=False):
     columns_to_show = ['Similarity Score','Title','Release'] + \
                         platform_cols + ['Tags']
     if submit:
-        out = find_similar_games(game, dataset, n, reverse)
+        out = find_similar_games(game, dataset)
         out = annotate_table(out, platform=platform)
-        out = rearrange_table(out, columns_to_show,
+        out = rearrange_table(out, columns_to_show, how_many_rows=n, reverse=reverse,
                               order_by='Similarity Score', desc=not reverse)
         out = render_table(out)
         
+        video_games = load_vg_data_for_web_app()
+        target_game = video_games[video_games.Name==game]
+        columns_to_show = ['Title','Release','Steam Rating','Tags']
+        target_game = rearrange_table(target_game, columns_to_show)
+        target_game = render_table(target_game)
+
         if reverse:
             comparative = " least"
         else:
             comparative = " most"
             
         st.markdown("### The "+str(n)+" "+type_of_game+" games "+comparative+" similar to "+game)
+        st.write(target_game, unsafe_allow_html=True)
+        st.write('<br><br>', unsafe_allow_html=True)
         st.write(out, unsafe_allow_html=True)
