@@ -132,7 +132,7 @@ def recommend_boardgames(steam_id,
 
 
 def app():
-    st.title('Go Analog')
+    st.title('🎲 Go Analog 🕹')
 
     form = st.form(key='my_key')
     

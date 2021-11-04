@@ -3,6 +3,7 @@ import pandas as pd
 from src import home, sim_bg, sim_vg, dataset, go_analog, how
 
 def main():
+    st.set_page_config(page_title='Go Analog', page_icon=':game_die:')
     st.sidebar.title("Go Analog: board game and video game tools")
     selection = st.sidebar.radio("Go to", list(pages.keys()))
     page = pages.get(selection)

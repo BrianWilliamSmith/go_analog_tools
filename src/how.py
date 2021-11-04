@@ -1,7 +1,7 @@
 import streamlit as st
 
 def app():
-    st.title("How's it work?")
+    st.title("🎲 How's it work? 🕹")
     st.markdown('''
 
 Here are some technical details for the curious.
