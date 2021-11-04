@@ -64,7 +64,7 @@ def find_similar(platform='steam', reverse=False):
         dataset = load_bgg_data()
   
     form = st.form(key='my_key')
-    game = form.selectbox("Select game", options=dataset.columns)
+    game = form.selectbox("Select video game", options=dataset.columns)
     n = form.slider("Number of games", 5, 50, 10)
     reverse = form.checkbox("Show least similar games instead")
     submit = form.form_submit_button("Find similar games")
@@ -95,8 +95,8 @@ def find_similar(platform='steam', reverse=False):
             comparative = " least"
         else:
             comparative = " most"
-            
-        st.markdown("### The "+str(n)+" "+type_of_game+" games "+comparative+" similar to "+game)
+    
         st.write(target_game, unsafe_allow_html=True)
+        st.markdown("### The "+str(n)+" "+type_of_game+" games "+comparative+" similar to "+game)
         st.write('<br><br>', unsafe_allow_html=True)
         st.write(out, unsafe_allow_html=True)
