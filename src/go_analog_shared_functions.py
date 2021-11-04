@@ -3,19 +3,21 @@ import pandas as pd
 
 # Filepaths for video game and board game info
 # Used in web app
-bg_app_filepath = 'bg_info_for_app.csv'
-vg_app_filepath = 'vg_info_for_app.csv'
+bg_app_filepath = 'web_app_dataset/bg_info_for_app.csv'
+vg_app_filepath = 'web_app_dataset/vg_info_for_app.csv'
+ism_bgg_filepath = 'web_app_dataset/ism_bgg.pkl'
+ism_steam_filepath = 'web_app_dataset/ism_steam.pkl'
 
 # Functions for loading data
 # Separate functions for different dataests so they can all be cached
 @st.cache(hash_funcs={pd.DataFrame: lambda _: None})
 def load_steam_data():
-    df = pd.read_pickle('ism_steam.pkl', compression="bz2")
+    df = pd.read_pickle(ism_steam_filepath, compression="bz2")
     return df
 
 @st.cache(hash_funcs={pd.DataFrame: lambda _: None})
 def load_bgg_data():
-    df = pd.read_pickle('ism_bgg.pkl', compression="bz2")
+    df = pd.read_pickle(ism_bgg_filepath, compression="bz2")
     return df
 
 @st.cache(hash_funcs={pd.DataFrame: lambda _: None})

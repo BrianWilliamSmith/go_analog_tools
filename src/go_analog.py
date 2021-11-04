@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-from src.sim import *
+from src.go_analog_shared_functions import *
 import requests as rq
 import json
 
@@ -79,7 +79,7 @@ def recommend_boardgames(steam_id,
         based_on_games_you_play = {}
         for bg in bgs_with_neighbors:
             sim_games = df.loc[bgs_with_neighbors].transpose()[bg].nlargest(based_on_n).index.tolist()
-            based_on_games_you_play.update({bg:'You play…,<br>' + '<br>'.join(sim_games)})
+            based_on_games_you_play.update({bg:'You play…<br>' + ',<br>'.join(sim_games)})
 
         # Predict scores for bgs with neighbors
         user_item_neighbors = df.loc[bgs_with_neighbors].to_numpy()

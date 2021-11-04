@@ -12,7 +12,7 @@ The main dataset consists of four tables. The same (anonymized) users are includ
 - **BoardGames** : Board game info from BGG for the board games in BGGRatings. No expansions. Accessed using BGG API
 - **VideoGames** : Video game info from Steam for the video games in SteamPlaytimes. Accessed by scraping Steam store pages 
 
-[Go Analog Dataset on Github](https://github.com/BrianWilliamSmith/go_analog_tools/tree/main/go_analog_dataset)
+[Go Analog Dataset on Go Analog's GitHub](https://github.com/BrianWilliamSmith/go_analog_tools/tree/main/go_analog_dataset)
 
 #### Things you should know if you want to use the data
 
@@ -88,7 +88,10 @@ The main dataset consists of four tables. The same (anonymized) users are includ
 
 ### Web app data
 
-The web app uses four tables, which were all derived from the main dataset. These are available on the GitHub page for the app
+The web app uses four tables, which were all derived from the main dataset. The directory below has the tables along with a Jupyter notebook showing how they were generated.
+
+[Web App Dataset on Go Analog's GitHub](https://github.com/BrianWilliamSmith/go_analog_tools/tree/main/web_app_dataset)
+
 
 * **ism_bgg.pkl** : A pickled and compressed dataframe containing an item similarity matrix (ISM)
     * The ISM shows cosine similarity between board games and video games, calculated using z scores

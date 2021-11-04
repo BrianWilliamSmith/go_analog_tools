@@ -1,5 +1,5 @@
 import streamlit as st
-from src.sim import *
+from src.go_analog_shared_functions import *
 
 def app():
     st.title('Find the most similar games')
