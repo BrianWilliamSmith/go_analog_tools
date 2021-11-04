@@ -133,6 +133,7 @@ def recommend_boardgames(steam_id,
 
 def app():
     st.title('🎲 Go Analog 🕹')
+    st.header('Recommend board games based on your Steam profile')
 
     form = st.form(key='my_key')
     
