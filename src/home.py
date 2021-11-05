@@ -21,7 +21,7 @@ I'm Brian, and I developed Go Analog as a portfolio project, fueled by a love of
     - You can download the dataset and read more about how it was made on the Dataset page 
 
 - Questions? Ideas? Job? Contact me and say hello!
-    - LinkedIn : [linked.com/brianwilliamsmith](https://www.linkedin.com/in/brian-william-smith/)
+    - LinkedIn : [linkedin.com/in/brian-william-smith](https://www.linkedin.com/in/brian-william-smith/)
     - E-mail : bwsmith.linguist@gmail.com 
 
                 ''')
