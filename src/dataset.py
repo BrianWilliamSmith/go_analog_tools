@@ -34,7 +34,7 @@ The main dataset consists of four tables. The same (anonymized) users are includ
     - This happens when a user reviews a game twice
     - This doesn't occur in the dataset, because I averaged multiple reviews together
 - Playtimes and ratings were last updated in December 2020. Newer games won't be in the dataset
-- Boardgame and video game data were last updated in October 2021 — rankings, ratings, and tags may have changed!
+- Board game and video game data were last updated in October 2021 — rankings, ratings, and tags may have changed!
 - To build the recommender, I processed the data by:
     - log-transforming Steam playtimes to deal with extreme outliers 
     - converting ratings and reviews to z-scores to account for the fact that users have different baseline ratings or playtimes
@@ -43,7 +43,7 @@ The main dataset consists of four tables. The same (anonymized) users are includ
 
 #### BoardGames.csv
 
-* **Id** : Unique boardgame ID used by BGG
+* **Id** : Unique board game ID used by BGG
 * **Name**
 * **Release** : Date formatted as YYYY
 * **Rating** : Average game rating on a scale of 1-10, corresponds to Bayes Average in BGG API 
@@ -84,7 +84,7 @@ The main dataset consists of four tables. The same (anonymized) users are includ
 
 * **User** : Anonymized ID
 * **Game** : BGG board game ID, foreign key for BoardGames
-* **Rating** : Raw untrasformed boardgame rating
+* **Rating** : Raw untransformed board game rating
 
 ### Web app data
 
@@ -98,7 +98,7 @@ The web app uses four tables, which were all derived from the main dataset. The 
     * The similarity scores are between -1 and +1 (since z-scores can be negative)
     * Due to negative similarity scores, you can't use weighted averages to make predictions
     * load with `pd.read_pickle(filename, compression='bz2')`
-* **ism_steam.pkl** : Another pickled and compressed datarame with an ISM containing similarity scores between video games and video games (see **ism_bgg.pkl ** above for more info)
+* **ism_steam.pkl** : Another pickled and compressed dataframe with an ISM containing similarity scores between video games and video games (see **ism_bgg.pkl ** above for more info)
 * **bg\_info\_for_app.csv** : Used to add board game information to the output tables in the app. Contains html-safe titles, links, tags, etc.
 * **vg\_info\_for\_app.csv** : Used to add video game information to the output tables in the app. Contains html-safe titles, links, tags, etc.
 ''')
