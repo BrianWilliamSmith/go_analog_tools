@@ -2,6 +2,8 @@
 
 key.txt
 
+.DS_Store
+
 # Git's Boilerplate gitignore
 
 # Byte-compiled / optimized / DLL files

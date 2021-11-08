@@ -4,6 +4,7 @@ import numpy as np
 import random as rd
 import requests as rq
 import json
+import os
 
 # Filepaths for video game and board game info
 # Used in web app
@@ -337,7 +338,7 @@ def go_analog_app(platform='bgg'):
     # Run when form is submitted
     
     if submit:
-        my_steam_key = open("key.txt").read()
+        my_steam_key = os.environ['API_KEY'],
 
         if len(selected_games) > 0:
             if len(selected_games) < min_selected_games:
