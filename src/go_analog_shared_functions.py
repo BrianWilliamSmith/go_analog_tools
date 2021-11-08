@@ -338,7 +338,11 @@ def go_analog_app(platform='bgg'):
     # Run when form is submitted
     
     if submit:
-        my_steam_key = os.environ.get('API_KEY', st.error("Steam API key either isn't loaded or isn't working"))
+        my_steam_key = os.environ.get('API_KEY')
+
+        if my_steam_key == None:
+            st.error("Steam API key either isn't available"))
+            st.stop()
 
         if len(selected_games) > 0:
             if len(selected_games) < min_selected_games:
