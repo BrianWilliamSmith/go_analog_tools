@@ -2,8 +2,9 @@ import streamlit as st
 
 def app():
 
-    st.title('🎲 Home 🕹')
-    st.markdown('''
+  st.title('🎲 Home 🕹')
+
+  st.markdown('''
 
 ### Welcome!
 
@@ -13,6 +14,7 @@ I'm Brian, and I developed Go Analog as a portfolio project, fueled by a love of
   - The full version of the recommender requires an account on the videogaming platform Steam
   - Enter your 9-digit Steam ID and make sure your video game playtime isn't set to private
   - Go Analog will access your video game play history and make personalized recommendations for board games
+  - Go Analog can also recommend video games, but the dataset was built with board game recommendation in mind
 - If you don't have a Steam account…
   - You can use the conversion tools to select a video game and explore similar video or board games
   - You can manually select video games you like in the Go Analog input
