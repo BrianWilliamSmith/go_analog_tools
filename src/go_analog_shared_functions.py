@@ -341,7 +341,7 @@ def go_analog_app(platform='bgg'):
         my_steam_key = os.environ.get('API_KEY')
 
         if my_steam_key == None:
-            st.error("Steam API key either isn't available")
+            st.error("Steam API key isn't available")
             st.stop()
 
         if len(selected_games) > 0:

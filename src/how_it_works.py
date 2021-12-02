@@ -19,7 +19,7 @@ def app():
      El Caballero        0.017950              -0.018933       0.000000 
 
 - The tool accesses a user's video game playtimes, converts the game playtimes to z-scores, removes games they've played fewer than 10 minutes, and removes games that aren't in the similarity table
-    - The z-score transformation means that games that the user plays a lot still migtht get negative scores. A negative score just means the user doesn't *love* the game
+    - The z-score transformation means that games that the user plays a lot still might get negative scores. A negative score just means the user doesn't *love* the game
     - Playtimes were used instead of Steam ratings because **very few** Steam users rate games on Steam (while the average BGG user rates dozens of board games)
 - The tool then generates a score for every board game
     - If a board game has at least k similar video games in the user's video game collection…
@@ -31,7 +31,7 @@ def app():
         - The tool just uses the global average z-score for that board game
         - When this happens, the tool reports so in the last column
         - You can turn this off with the checkbox "Only add popular games to ranking if they're similar to games I like"
-        - If k or the similarity threshhold is too high, all of the recommended games are just games that are popular, with no personalized recommendation at all
+        - If k or the similarity threshhold is too high, all of the recommended games are games that are popular, with no personalized recommendation at all
     - In order to weave together the genuine predictions (unbounded dot products) and the popular games (global average z-scores), the genuine predictions are transformed into z-scores
         - +2 is a very good score (the user will love it!) and -2 is a very mediocre score (maybe they'll hate it)
 
