@@ -1,12 +1,10 @@
 import streamlit as st
+import pandas as pd
 
-def app():
+st.set_page_config(page_title='Go Analog', page_icon=':game_die:')
 
-  st.title('🎲 Home 🕹')
-
-  st.markdown('''
-
-### Welcome!
+st.markdown('''
+## Welcome to Go Analog!
 
 I'm Brian, and I developed Go Analog as a portfolio project, fueled by a love of all types of gaming. You can find everything [on Github](https://github.com/BrianWilliamSmith/go_analog_tools/).
 
@@ -27,5 +25,5 @@ I'm Brian, and I developed Go Analog as a portfolio project, fueled by a love of
 - Questions? Ideas? Job? Contact me and say hello!
   - LinkedIn : [linkedin.com/in/brian-william-smith](https://www.linkedin.com/in/brian-william-smith/)
   - E-mail : bwsmith.linguist@gmail.com 
+''')
 
-                ''')

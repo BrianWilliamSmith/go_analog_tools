@@ -1,8 +1,7 @@
 import streamlit as st
 
-def app():
-    st.title("🎲 How's it work? 🕹")
-    st.markdown('''
+st.title("🎲 How's it work? 🕹")
+st.markdown('''
 
 ### The recommender
 
@@ -47,4 +46,4 @@ def app():
 
 - User scores are z-scores. This accounts for the fact that users have different baseline ratings (some users use the upper end of the rating scale, while others use the lower end) or different playtime distributions
 - Before being transformed into z-scores, video game playtimes are log-transformed. This addresses the heavy right tail in most playtime distributions. It's not uncommon to find that a player plays one or two games for hundreds or even thousands of hours
-                ''')
+''')

@@ -1,8 +1,7 @@
 import streamlit as st
 
-def app():
-    st.title('🎲 Dataset 🕹')
-    st. markdown('''
+st.title('🎲 Dataset 🕹')
+st. markdown('''
 ### Main dataset
 
 The main dataset consists of four tables. The same (anonymized) users are included in both BGGRatings and SteamPlaytimes

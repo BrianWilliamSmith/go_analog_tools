@@ -16,29 +16,25 @@ ism_steam_filepath = 'web_app_dataset/ism_steam.pkl'
 # Functions for loading data
 # Separate functions for different dataests so they can all be cached
 
-@st.cache(hash_funcs={pd.DataFrame: lambda _: None}, show_spinner=False)
+@st.cache_data
 def load_steam_data():
     with st.spinner("Please wait. Loading video game ⮕ video game item similarity matrix…"):
         df = pd.read_pickle(ism_steam_filepath, compression="bz2")
         return df
 
-
-@st.cache(hash_funcs={pd.DataFrame: lambda _: None}, show_spinner=False)
+@st.cache_data
 def load_bgg_data():
     with st.spinner("Please wait. Loading video game ⮕ board game item similarity matrix…"):
         df = pd.read_pickle(ism_bgg_filepath, compression="bz2")
         return df
 
-
-@st.cache(hash_funcs={pd.DataFrame: lambda _: None})
+@st.cache_data
 def load_bg_data_for_web_app():
     return pd.read_csv(bg_app_filepath)
 
-
-@st.cache(hash_funcs={pd.DataFrame: lambda _: None})
+@st.cache_data
 def load_vg_data_for_web_app():
     return pd.read_csv(vg_app_filepath)
-
 
 def find_similar_games(game_name, item_sim_matrix):
     # Returns 2-column data frame
@@ -50,7 +46,6 @@ def find_similar_games(game_name, item_sim_matrix):
     except:
         return 'Game not in database'
 
-
 def annotate_table(df, left_on='Game', right_on='Name', platform='bgg'):
     if platform == 'bgg':
         dataset = load_bg_data_for_web_app()
@@ -58,7 +53,6 @@ def annotate_table(df, left_on='Game', right_on='Name', platform='bgg'):
         dataset = load_vg_data_for_web_app()
     df = df.merge(dataset, left_on=left_on, right_on=right_on)
     return df
-
 
 def rearrange_table(df, columns_to_show, order_by='Title', how_many_rows=10,
                     desc=False, reverse=False):
@@ -69,12 +63,10 @@ def rearrange_table(df, columns_to_show, order_by='Title', how_many_rows=10,
     df = df.sort_values(by = [order_by], ascending = not desc)
     return df[columns_to_show]
 
-
 def render_table(df):
     out = df.to_html(index=False, justify='center', escape=False)
     out = out.replace('<td>', '<td align="center" valign="center">')
     return out
-
 
 def get_games(steam_id, steam_api_key):
     '''
@@ -103,7 +95,6 @@ def get_games(steam_id, steam_api_key):
     
         return out
 
-
 def normalize_ratings(game_ratings, cutoff=10, z_scores = True):
     '''
     Takes a list of (game, ratings) tuples, prunes games with playtimes
@@ -125,8 +116,7 @@ def normalize_ratings(game_ratings, cutoff=10, z_scores = True):
 
     return(list(zip(games, ratings)))
 
-
-@st.cache(show_spinner=False, suppress_st_warning=True)
+@st.cache_data
 def recommend_games(games,
     platform='bgg', 
     min_neighbors=3, 
@@ -213,8 +203,8 @@ def recommend_games(games,
     
     return output_df
 
-
 def find_similar(platform='steam', reverse=False):
+    
     if platform == 'steam':
         dataset = load_steam_data()
     if platform == 'bgg':
@@ -259,7 +249,6 @@ def find_similar(platform='steam', reverse=False):
         st.write('<br>', unsafe_allow_html=True)
         st.markdown("### The " + str(n) + " " + type_of_game + " games " + comparative + " similar to " + game)
         st.write(out, unsafe_allow_html=True)
-
 
 def go_analog_app(platform='bgg'):
 
