@@ -11,15 +11,15 @@ I'm Brian, and I developed Go Analog as a portfolio project, fueled by my love o
 - **Go Analog** recommends board games that are similar to your favorite video games.
   - Enter your 9-digit Steam ID and make sure your video game playtime isn't set to private on Steam.
   - Go Analog will access your video game play history and make personalized recommendations for board games.
+- In addition to original tool for generating recommendations for board games, there are three more tools:
+   - Enter your Steam ID to generate video game recommendations, which uses the same logic as board games recommendation.
+   - Select a video game and see the most similar (or most different) board games in the dataset.
+   - Select a video game and see the most similar (or most different) video games in the dataset.
 - If you don't have a Steam account…
   - You can manually select video games you like in the Go Analog input.
   - You can use one of these Steam IDs, each of which has publicly accessible profiles (at the time of writing):
       - 76561198018010017, 76561198029016376, 76561198012840749, 76561198011832660, 76561198312338396, 76561197969480861
   - You can use the tools that don't require a Steam profile.
-- In addition to original tool for generating recommendations for board games, there are three more tools:
-   - Enter your Steam ID to generate video game recommendations, which uses the same logic as board games recommendation.
-   - Select a video game and see the most similar (or most different) board games in the dataset.
-   - Select a video game and see the most similar (or most different) video games in the dataset.
 - All of the tools were built using a home-brewed dataset of users' video game playtimes and board game ratings.
   - The data were collected by finding users who use both BoardGameGeek (BGG) and Steam, and collating their game preferences from both platforms.
   - You can download the dataset and read more about how it was made on the **Dataset** page.
