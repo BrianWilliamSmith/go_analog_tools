@@ -29,9 +29,8 @@ The main dataset consists of four tables. The same (anonymized) users are includ
     - Sometimes the same game has multiple (distinct) IDs
 - Game names and tags contain quotes, apostrophes, and other bad stuff
     - Be especially careful if you want to parse them into html (as I did with the web app)
-- A BGG user can have multiple reviews for the same game
-    - This happens when a user reviews a game twice
-    - This doesn't occur in the dataset, because I averaged multiple reviews together
+- A user can review the same board game multiple times
+    - I averaged multiple reviews together, resulting in a maximum of one rating per board game per user
 - Playtimes and ratings were last updated in December 2020. Newer games won't be in the dataset
 - Board game and video game data were last updated in October 2021 — rankings, ratings, and tags may have changed!
 - To build the recommender, I processed the data by:
@@ -90,7 +89,6 @@ The main dataset consists of four tables. The same (anonymized) users are includ
 The web app uses four tables, which were all derived from the main dataset. The directory below has the tables along with a Jupyter notebook showing how they were generated.
 
 [Web App Dataset on Go Analog's GitHub](https://github.com/BrianWilliamSmith/go_analog_tools/tree/main/web_app_dataset)
-
 
 * **ism_bgg.pkl** : A pickled and compressed dataframe containing an item similarity matrix (ISM)
     * The ISM shows cosine similarity between board games and video games, calculated using z scores

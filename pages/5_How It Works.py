@@ -3,47 +3,65 @@ import streamlit as st
 st.title("🎲 How's it work? 🕹")
 st.markdown('''
 
-### The recommender
+### Board Game Recommendation from Steam Profile
 
-- The recommender uses a really simple memory-based item-item collaborative filtering model
-- A huge table contains a similarity score for every (video game, board game) pair
+- The recommender uses a straightforward item-item collaborative filtering model.
+- The backbone is an item similarity matrix, which contains a similarity score for every (video game, board game) pair. Similarity scores range from -1 (complete opposites) to +1 (basically identical). Here's a snippet as an example. See the next section for details on how this matrix was constructed.
 
-                  
-     Video Game    Counter-Strike  Team Fortress Classic  Day of Defeat
-     Board Game                                                                 
-     Die Macher         -0.021792              -0.012481       0.007628   
-     Samurai             0.002914              -0.000590      -0.037223   
-     Acquire            -0.032521              -0.009481      -0.028111   
-     Cathedral           0.031774               0.000000      -0.003076   
-     El Caballero        0.017950              -0.018933       0.000000 
+| Video Game ➡️<br> Board Game ⬇️   |  Counter-Strike <br>   | Team Fortress Classic <br>   | Day of Defeat <br>  |
+| -------       |  ------------: | ------------:           | ------------: |
+| **Die Macher**       |  –0.021792    |          –0.012481        | 0.007628 |
+| **Samurai**          |   0.002914    |          –0.000590        | –0.037223 |
+| **Cathedral**        |   0.031774    |           0.000000        | –0.003076 |
+| **El Caballero**     |   0.017950    |          –0.018933    | 0.000000 |
 
-- The tool accesses a user's video game playtimes, converts the game playtimes to z-scores, removes games they've played fewer than 10 minutes, and removes games that aren't in the similarity table
-    - The z-score transformation means that games that the user plays a lot still might get negative scores. A negative score just means the user doesn't *love* the game
-    - Playtimes were used instead of Steam ratings because **very few** Steam users rate games on Steam (while the average BGG user rates dozens of board games)
-- The tool then generates a score for every board game
-    - If a board game has at least k similar video games in the user's video game collection…
-    	- …then the predicted board game score is the dot product of all video games' similarity scores for that board game and the player's scores for those video games
-    	- k is 3 (by default)
-    	- Two games are similar if their similarity score > 0.15 (by default)
-    	- Dot product is used instead of a weighted average because similarity scores can be negative
-    - If there aren't enough similar video games to predict a board game score
-        - The tool just uses the global average z-score for that board game
-        - When this happens, the tool reports so in the last column
-        - You can turn this off with the checkbox "Only add popular games to ranking if they're similar to games I like"
-        - If k or the similarity threshhold is too high, all of the recommended games are games that are popular, with no personalized recommendation at all
-    - In order to weave together the genuine predictions (unbounded dot products) and the popular games (global average z-scores), the genuine predictions are transformed into z-scores
-        - +2 is a very good score (the user will love it!) and -2 is a very mediocre score (maybe they'll hate it)
+- When a user enters their Steam ID, the program grabs their video game play history and finds the best boardgames, using the steps below.
+    - First, the program accesses a user's video game playtimes and converts them to scores.
+        - There are three steps in converting:
+            - Transform the game playtimes to Z-scores.
+            - Remove games the user has played fewer than 10 minutes.
+            - Removes games that aren't in the similarity matrix.
+        - Playtimes were used instead of Steam ratings because **very few** Steam users rate games on Steam, but playtimes are recorded for every game.
+        - Z-scores are used since absolute playtime isn't very meaningful. Some players have the free time to sink dozens of hours into games they don't like. What matters is which games the player plays the most (and least) in their library.
+        - The Z-score transformation means that games that the user plays a lot still might have negative Z-scores, if the game's playtime is below the user's average game playtime'.
+    - Next, the program generates a score for every board game based on the user's video game scores.
+        - For each board game, its score is calculated as the dot product of all video games' similarity scores multiplied by the player's scores for those video games.
+            - For example, imagine we were calculating scores for **Die Macher**, given the similarity matrix…
+              |                |  Counter-Strike <br>   | Team Fortress Classic <br>   | Day of Defeat <br>  |
+              | -------       |  ------------: | ------------:           | ------------: |
+              | **Die Macher**       |  –0.02   |          –0.01         | 0.01 |
+              | **Cathedral**        |   0.03    |           0.00       | 0.00 |
+            - …and scores…
+              |     |         Counter-Strike <br>   | Team Fortress Classic <br>   | Day of Defeat <br>  |
+              | -------       |  ------------: | ------------:           | ------------: |
+              | **User Score**              |  -2    |          0      | 1 |
+    	    - The predicted scores would be…
+    	        - Die Macher: **0.14** = (–0.02 ⨉ –2) + (–0.1 ⨉ 0) + (0.1 ⨉ 1)
+    	        - Cathedral:  **–0.06** = (0.03 ⨉ –2) + (0.00 ⨉ 0) + (0.00 ⨉ 1)
+    	    - Dot product is used instead of a weighted average because similarity scores can be negative.
+        - The method above is only used when the user has played video games similar to the board game: a board game must have at least k similar video games in the user's video game collection, where k is 3 and "similar" means the similarity score > 0.15.
+            - If there aren't enough similar video games to predict a board game score…
+                - The tool just uses the global average Z-score for that board game.
+                - When this happens, the tool reports so in the last column.
+                - You can turn this off with the checkbox "Only add popular games to ranking if they're similar to games I like".
+                - If k or the similarity threshhold is too high, all of the recommended games are games that are popular, with no personalized recommendation at all.
+        - In order to combine the genuine predictions (unbounded dot products) and the popular games (global average z-scores), the genuine predictions are transformed into z-scores
+            - +2 is a very good score (the user will love it!) and -2 is a very mediocre score (maybe they'll hate it).
 
-### The similarity table
+### The similarity matrix
 
-- The similarity table is generated by calculating the cosine similarity between games' user scores
+- The similarity matrix is generated by calculating the cosine similarity between games' user scores.
+    - For example, if we had the four users' game ratings below, the similarity between the board game and video game would be the cosine similarity between the board game's rating vector [0.59, –0.02, 5.38, 2.82] and the video game's rating vector [–0.24, –0.47, –2.41, 0.60].
 
-                      user106  user1172   user207   user263 
-      Game    39210  0.595160 -0.027969  5.380914  2.828327 
-              63500 -0.241221 -0.469573 -2.419156  0.602278 
+        | Game |                      user106 | user1172  | user207   | user263 |
+        | --- | ---: | ---: | ---: | ---:|
+        |  Board Game    | 0.59  | –0.02     | 5.38      | 2.82 |
+        |  Video Game    | –0.24 | –0.47     | –2.41     | 0.60 |
 
-
-
-- User scores are z-scores. This accounts for the fact that users have different baseline ratings (some users use the upper end of the rating scale, while others use the lower end) or different playtime distributions
+- User scores are z-scores for both video games and board games.
+    - For video games, user scores are based on playtimes on the Steam platform.
+    - For board games, user scores are based on ratings on the platform BoardGameGeek.
+    - This accounts for the fact that users have different baseline ratings (some users use the upper end of the rating scale, while others use the lower end) or different playtime distributions
 - Before being transformed into z-scores, video game playtimes are log-transformed. This addresses the heavy right tail in most playtime distributions. It's not uncommon to find that a player plays one or two games for hundreds or even thousands of hours
-''')
+- More info is available on the **Dataset* page.
+''', unsafe_allow_html=True)
