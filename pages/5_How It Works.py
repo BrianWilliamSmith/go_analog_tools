@@ -63,5 +63,5 @@ st.markdown('''
     - For board games, user scores are based on ratings on the platform BoardGameGeek.
     - This accounts for the fact that users have different baseline ratings (some users use the upper end of the rating scale, while others use the lower end) or different playtime distributions
 - Before being transformed into z-scores, video game playtimes are log-transformed. This addresses the heavy right tail in most playtime distributions. It's not uncommon to find that a player plays one or two games for hundreds or even thousands of hours
-- More info is available on the **Dataset* page.
+- More info is available on the **Dataset** page.
 ''', unsafe_allow_html=True)
